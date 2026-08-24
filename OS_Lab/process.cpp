@@ -19,18 +19,10 @@ enum process_state
     SUSPENDED_READY,
     SUSPENDED_WAIT 
 };
-enum priority
-{
-    NO,
-    LOW,
-    MEDIUM,
-    HIGH
-};
 class process
 {
     public:
-        int pid, at, bt;
-        priority pri = NO;
+        int pid, at, bt, pri;
         void show_data()
         {
             cout<<"Pid "<<pid<<" AT "<<at<<" BT "<<bt<<" Priority "<<pri<<endl;
@@ -57,41 +49,19 @@ void simulate(scheduling_algorithm sa)
         // input at and bt
         // input priority if priority
 
-        int pid, at, bt;
-        int pr_int=-1;  priority pri = NO;// int to enum
-        cout<<"Priority (NO<--0, LOW<--1, MEDIUM<--2, HIGH<--3)"<<endl;
+        int pid, at, bt, pri = -1;// int to enum
+
         if (sa != PRIORITY)
         {
             cout<<"Enter Arrival time and burst time for process "<<i+1<<endl;
             cin>>at>>bt;
-            pri = NO;
         }
         else
         {
             cout<<"Enter Arrival time, burst time and priority"<<i+1<<endl;       
-            cin>>at>>bt>>pr_int;
-            switch(pr_int) // set pr
-            {
-                case 0:
-                    cout<<"Can't manualy set priority to NO, please pick LOW, MEDIUM or HIGH for PRIORITY algorithm"<<endl;
-                    exit(0);
-                    break;
-                case 1:
-                    pri=LOW;
-                    break;
-                case 2:
-                    pri=MEDIUM;
-                    break;
-                case 3:
-                    pri=HIGH;
-                    break;
-                default:
-                    cout<<"Invalid input, please try again..."<<endl;
-                    exit(0);
-                    break;
-            }
+            cin>>at>>bt>>pri;
         }  
-
+        
         pr.pid = i; pr.at = at; pr.bt = bt; pr.pri = pri;
         pt.push_back(pr);
     }
